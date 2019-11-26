@@ -5,7 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     static Vector3 POS = Vector3.zero;
-    Rigidbody rgd;
+    private Rigidbody rgd;
     void Start()
     {
         rgd = GetComponent<Rigidbody>();

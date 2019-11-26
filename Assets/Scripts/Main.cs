@@ -14,6 +14,9 @@ public class Main : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
 
+    }
 
 }
