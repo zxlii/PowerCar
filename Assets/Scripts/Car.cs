@@ -11,15 +11,19 @@ public class Car : MonoBehaviour
         rgd = GetComponent<Rigidbody>();
     }
 
+    public void AddForceByTime(float holdTime)
+    {
+        AddForce(holdTime * holdTime * 15f);
+    }
+
     public void AddForce(float val)
     {
         rgd.AddForce(Vector3.forward * val);
     }
 
-    void Update()
+    public bool IsMoving()
     {
-        POS = transform.position;
-        POS.x = 0;
-        transform.position = POS;
+        // return !rgd.IsSleeping();
+        return rgd.velocity.magnitude > 0.01f;
     }
 }

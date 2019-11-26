@@ -9,23 +9,27 @@ public class Game : MonoBehaviour
     public UI ui;
     public GameObject dest;
 
+    void Awake()
+    {
+
+    }
+
     void Start()
     {
-
+        ui.onPowerEnd = OnPowerEnd;
     }
 
-    void InitUI()
+    void OnPowerEnd(float powerTime)
     {
-
+        car.AddForceByTime(powerTime);
     }
 
-    void OnButtonHold()
+    void Update()
     {
-
-    }
-
-    void OnButtonRelease()
-    {
-        
+        if (car.IsMoving())
+        {
+            var len = dest.transform.position.z - car.transform.position.z;
+            ui.UpdateLength(Mathf.RoundToInt(len * 10));
+        }
     }
 }
