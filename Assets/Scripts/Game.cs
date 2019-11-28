@@ -9,14 +9,17 @@ public class Game : MonoBehaviour
     public UI ui;
     public GameObject dest;
 
-    void Awake()
-    {
-
-    }
-
     void Start()
     {
-        ui.onPowerEnd = OnPowerEnd;
+        OnInit();
+    }
+
+    void OnInit()
+    {
+        car.OnInit(OnCarStop, OnCarOut, UpdateCarInfo);
+        ui.OnInit(OnPowerEnd);
+
+        UpdateCarInfo();
     }
 
     void OnPowerEnd(float powerTime)
@@ -24,12 +27,24 @@ public class Game : MonoBehaviour
         car.AddForceByTime(powerTime);
     }
 
-    void Update()
+    void UpdateCarInfo()
     {
-        if (car.IsMoving())
-        {
-            var len = dest.transform.position.z - car.transform.position.z;
-            ui.UpdateLength(Mathf.RoundToInt(len * 10));
-        }
+        var len = dest.transform.position.z - car.transform.position.z;
+        ui.UpdateLength(Mathf.RoundToInt(len * 10));
+    }
+
+    void OnCarStop()
+    {
+        OnResult(false);
+    }
+
+    void OnCarOut()
+    {
+        OnResult(true);
+    }
+
+    void OnResult(bool isOut)
+    {
+
     }
 }

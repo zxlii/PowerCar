@@ -7,26 +7,23 @@ using System;
 
 public class UI : MonoBehaviour
 {
-
     public Text txtStartTip;
     public Text txtTime;
     public Text txtLength;
     public UIHoldButton btnHold;
-    public Car car;
     private float holdStartTimePoint = 0;
     private double holdTimeDelta = 0;
-
-    public Action<float> onPowerEnd;
+    private Action<float> onPowerEnd;
 
     void Start()
     {
         btnHold.RegisterEvent(OnHoldStart, OnHoldEnd);
-
         txtStartTip.transform.DOScale(1.1f, 1f).SetLoops(-1, LoopType.Yoyo);
-
-        var col = "FFD049";
     }
-
+    public void OnInit(Action<float> powerEnd)
+    {
+        onPowerEnd = powerEnd;
+    }
     void OnHoldStart()
     {
         txtStartTip.transform.DOKill();
@@ -56,6 +53,8 @@ public class UI : MonoBehaviour
         ColorUtility.TryParseHtmlString("#FFD049", out yel);
         txtTime.color = yel;
 
+        btnHold.gameObject.SetActive(false);
+
         if (onPowerEnd != null)
             onPowerEnd((float)holdTimeDelta);
     }
@@ -74,5 +73,12 @@ public class UI : MonoBehaviour
         txtLength.text = m.ToString();
     }
 
-
+    public void OnResult(bool isOut, float distance, float total)
+    {
+        var t1 = "用力过猛！";
+        var t2 = "在开玩笑吗？";
+        var t3 = "朋友，差距有点大啊！";
+        var t4 = "不错，举例目标不远了！";
+        var t5 = "太棒了！犹如神算！";
+    }
 }
