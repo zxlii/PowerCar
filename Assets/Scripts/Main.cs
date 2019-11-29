@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+﻿using UnityEngine;
 public class Main : MonoBehaviour
 {
+
+    public AudioSource audioSource;
     public static Main Instance;
 
     public Game game;
@@ -14,4 +12,24 @@ public class Main : MonoBehaviour
         Instance = this;
     }
 
+    private AudioClip GetClip(string fileName)
+    {
+        var path = "Sounds/" + fileName;
+        AudioClip clip = Resources.Load<AudioClip>(path);
+        return clip;
+    }
+    public void PlaySound(string _SoundName)
+    {
+        AudioSource.PlayClipAtPoint(GetClip(_SoundName), transform.position, 1);
+    }
+
+    public void StopBGM()
+    {
+        audioSource.Stop();
+    }
+
+    public void PlayBGM()
+    {
+        audioSource.Play();
+    }
 }

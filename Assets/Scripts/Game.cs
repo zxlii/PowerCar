@@ -16,35 +16,15 @@ public class Game : MonoBehaviour
 
     void OnInit()
     {
-        car.OnInit(OnCarStop, OnCarOut, UpdateCarInfo);
-        ui.OnInit(OnPowerEnd);
+        car.OnInit(ui, dest);
+        ui.OnInit(car);
 
-        UpdateCarInfo();
+        Main.Instance.PlayBGM();
     }
 
-    void OnPowerEnd(float powerTime)
+    public void Restart()
     {
-        car.AddForceByTime(powerTime);
+        OnInit();
     }
 
-    void UpdateCarInfo()
-    {
-        var len = dest.transform.position.z - car.transform.position.z;
-        ui.UpdateLength(Mathf.RoundToInt(len * 10));
-    }
-
-    void OnCarStop()
-    {
-        OnResult(false);
-    }
-
-    void OnCarOut()
-    {
-        OnResult(true);
-    }
-
-    void OnResult(bool isOut)
-    {
-
-    }
 }
